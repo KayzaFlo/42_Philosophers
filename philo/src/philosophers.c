@@ -3,14 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: fgeslin42 <fgeslin42@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:54:41 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/02/16 16:56:33 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/02/17 11:02:33 by fgeslin42        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
+
+void    *call(void *param)
+{
+    printf("i: %d\n", *(int *)param);
+    return (NULL);
+}
 
 void    parse(int argc, char *argv[], t_philo_dat *datas)
 {
@@ -34,8 +40,18 @@ void    parse(int argc, char *argv[], t_philo_dat *datas)
 
 int main(int argc, char *argv[])
 {
-    t_philo_dat datas;
+    t_philo_dat dat;
+    pthread_t   *threads;
+    int         i;
 
-    parse(argc, argv, &datas);
+    parse(argc, argv, &dat);
+    threads = malloc(dat.count * sizeof(*threads));
+    i = 0;
+    while (i < dat.count)
+    {
+        pthread_create(&threads[i], NULL, &call, (void *)&i);
+        pthread_join(threads[i], NULL);
+        i++;
+    }
     return (0);
 }
