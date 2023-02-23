@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/02/16 16:52:24 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/02/23 13:46:11 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@
 # define KCYN  "\x1B[36m"
 # define KWHT  "\x1B[37m"
 
-typedef struct	s_philo_dat
+typedef struct s_philo_dat
 {
-    int count;
-    int time_to_die;
-    int time_to_eat;
-    int time_to_sleep;
-    int nbr_to_eat;
+	int	count;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	nbr_to_eat;
 }	t_philo_dat;
 
 int	ft_atoi(const char *str);
