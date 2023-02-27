@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/02/16 16:51:59 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/02/27 11:46:32 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ CFLAGS		= -Wall -Wextra -Werror
 
 #####	SOURCES		############################################################
 SRC			=	src/philosophers.c \
-				src/ft_atoi.c
+				src/init.c \
+				src/utils.c
 OBJ			=	$(SRC:.c=.o)
 
 #####	Makefile  objs		###################################################

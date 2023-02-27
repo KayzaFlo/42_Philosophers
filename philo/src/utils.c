@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:18:40 by fgeslin           #+#    #+#             */
-/*   Updated: 2022/10/19 12:14:15 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/02/27 13:58:50 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../inc/philosophers.h"
 
 static int	ft_isspace(char c)
 {
@@ -42,4 +44,20 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (nbr * mult);
+}
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	ft_return_error(char *msg)
+{
+	write(2, msg, ft_strlen(msg));
+	return (0);
 }
