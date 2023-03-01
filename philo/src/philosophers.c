@@ -6,11 +6,25 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:54:41 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/02/27 14:43:10 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/01 15:04:25 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
+
+// static int	check_death(t_philo *philos, t_env *env)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	(void)philos;
+// 	while (i < env->count)
+// 	{
+// 		printf("a");
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 static int	parse_params(int argc, char *argv[], t_env *env)
 {
@@ -38,5 +52,6 @@ int	main(int argc, char *argv[])
 	if (!parse_params(argc, argv, &env))
 		return (ft_return_error(ERR_PARAM));
 	init_threads(&philos, &env);
+	// check_death(&philos, &env);
 	return (0);
 }
