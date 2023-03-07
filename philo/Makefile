@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/03/02 13:03:23 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/03/07 15:20:08 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,13 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	@ echo "$(GREEN)Compilation ${WHITE}of ${CYAN}$(NAME) ${WHITE}..."
 	@ $(CC) -o $(NAME) $(OBJ) -lm
+	@ echo "$(CYAN)$(NAME) $(GREEN)created$(WHITE) ✔️"
+
+# ------ #
+
+debug: $(OBJ)
+	@ echo "$(GREEN)Debug Compil ${WHITE}of ${CYAN}$(NAME) ${WHITE}..."
+	@ $(CC) -fsanitize=thread -o $(NAME) $(OBJ) -lm
 	@ echo "$(CYAN)$(NAME) $(GREEN)created$(WHITE) ✔️"
 
 # ------ #
