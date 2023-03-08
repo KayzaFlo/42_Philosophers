@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/07 16:33:07 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/08 17:02:47 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ typedef struct	s_env
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat_count;
-	int				do_stop;
+	// int				do_stop;
+	int				is_dead;
+	int				is_satiated;
 	unsigned long	start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printing;
@@ -40,7 +42,6 @@ typedef struct	s_env
 
 typedef struct	s_philo
 {
-	// int				forks[2];
 	int				id;
 	int				ate_count;
 	uint64_t		last_ate;
@@ -56,7 +57,7 @@ int			ft_return_error(char *msg);
 uint64_t	get_time(void);
 void		ft_msleep(uint64_t duration, t_env *env);
 
-void		philo_print(char *msg, t_philo *philo, int unlock);
+void		print_status(char *msg, t_philo *philo, int unlock);
 
 void		threads_init(t_philo *philos, t_env *env);
 void		threads_exit(t_philo *philos, t_env *env);

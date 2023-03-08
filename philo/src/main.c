@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:54:41 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/07 16:45:08 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/08 16:30:59 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,37 +15,40 @@
 static void	wait_for_end(t_philo *philos, t_env *env)
 {
 	int	i;
-	// int	max_ate;
+	int	satiated_count;
 
-	// max_ate = 0;
-	while (!env->do_stop)
+	satiated_count = 0;
+	while (satiated_count != env->count)
 	{
 		i = -1;
-		while (++i < env->count && !env->do_stop)
+		satiated_count = 0;
+		while (++i < env->count && !env->is_dead)
 		{
 			// pthread_mutex_lock(&env->meal);
 			if ((int)(get_time() - philos[i].last_ate) >= env->time_to_die)
 			{
-				philo_print("died", &philos[i], 1);
-				env->do_stop = 1;
-			return ;
+				print_status("died", &philos[i], 1);
+				env->is_dead = 1;
+				return ;
 			}
+			if (env->max_eat_count && i < env->count)
+				if (philos[i].ate_count >= env->max_eat_count)
+					satiated_count++;
 			// pthread_mutex_unlock(&env->meal);
 		}
-		// if (env->do_stop)
-			// break ;
-		i = 0;
-			// printf("%d %d %d \n", env->count, philos[i].ate_count, env->max_ate);
-		while (env->max_eat_count && i < env->count
-			&& philos[i].ate_count >= env->max_eat_count)
-			i++;
-		env->do_stop = (i == env->count);
 	}
-		printf("All philos ate min %d times.\n", env->max_eat_count);
+	pthread_mutex_lock(&env->printing);
+	printf("Each philosopher ate at least %d time(s).\n", env->max_eat_count);
+	pthread_mutex_unlock(&env->printing);
+	env->is_satiated = 1;
 }
 
 static int	parse_params(int argc, char *argv[], t_env *env)
 {
+	env->start_time = get_time();
+	env->is_dead = 0;
+	env->is_satiated = 0;
+
 	env->count = ft_atoi(argv[1]);
 	env->time_to_die = ft_atoi(argv[2]);
 	env->time_to_eat = ft_atoi(argv[3]);
@@ -75,10 +78,10 @@ int	main(int argc, char *argv[])
 	if (!philos || !(env.forks))
 			return (ft_return_error("🔴 Error in Alloc!\n"));
 
-	// env.start_time = get_time();
 	threads_init(philos, &env);
 	wait_for_end(philos, &env);
-	// pthread_mutex_unlock(&env.printing);
 	threads_exit(philos, &env);
+	free(philos);
+	free(env.forks);
 	return (0);
 }
