@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/08 17:02:47 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/09 14:51:35 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct	s_env
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				max_eat_count;
-	// int				do_stop;
 	int				is_dead;
 	int				is_satiated;
 	unsigned long	start_time;

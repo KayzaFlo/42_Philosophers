@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:41:17 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/08 16:51:16 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/09 15:44:46 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_status(char *msg, t_philo *philo, int unlock)
 {
-	uint64_t	timestamp;
+	unsigned long	timestamp;
 
 	pthread_mutex_lock(&philo->env->printing);
 	timestamp = get_time() - philo->env->start_time;
@@ -31,19 +31,19 @@ void	routine(t_philo *philo)
 	env = philo->env;
 	while (!env->is_dead && !env->is_satiated)
 	{
-		print_status("is thinking", philo, 1);
 		pthread_mutex_lock(&env->forks[philo->id - 1]);
 		print_status("has taken a fork", philo, 1);
 		pthread_mutex_lock(&env->forks[philo->id % env->count]);
 		print_status("has taken a fork", philo, 1);
-		philo->last_ate = get_time();
 		print_status("is eating", philo, 1);
+		philo->last_ate = get_time();
 		philo->ate_count++;
 		ft_msleep(env->time_to_eat, env);
 		pthread_mutex_unlock(&env->forks[philo->id - 1]);
 		pthread_mutex_unlock(&env->forks[philo->id % env->count]);
 		print_status("is sleeping", philo, 1);
 		ft_msleep(env->time_to_sleep, env);
+		print_status("is thinking", philo, 1);
 	}
 }
 
@@ -91,7 +91,8 @@ void	threads_exit(t_philo *philos, t_env *env)
 	while (++i < env->count)
 	{
 		if (env->count > 1)
-			if (pthread_join(philos[i].thread_id, NULL))
+			if (pthread_detach(philos[i].thread_id))
+			// if (pthread_join(philos[i].thread_id, NULL))
 				ft_return_error("🔴 Error in Thread Join!\n");
 	}
 	i = -1;
