@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:54:41 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/08 16:30:59 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/10 14:56:47 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	wait_for_end(t_philo *philos, t_env *env)
 		while (++i < env->count && !env->is_dead)
 		{
 			// pthread_mutex_lock(&env->meal);
-			if ((int)(get_time() - philos[i].last_ate) >= env->time_to_die)
+			if ((int)(get_time() - philos[i].last_ate) > env->time_to_die)
 			{
 				print_status("died", &philos[i], 1);
 				env->is_dead = 1;

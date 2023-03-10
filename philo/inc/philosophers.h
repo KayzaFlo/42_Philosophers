@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/09 14:51:35 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/10 13:57:47 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ typedef struct	s_env
 typedef struct	s_philo
 {
 	int				id;
+	int				ffork;
+	int				sfork;
 	int				ate_count;
 	uint64_t		last_ate;
 	struct s_env	*env;

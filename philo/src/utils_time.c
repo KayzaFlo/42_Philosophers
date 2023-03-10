@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 13:01:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/09 14:37:00 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/10 16:18:12 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ uint64_t	get_time(void)
 
 void	ft_msleep(uint64_t duration, t_env *env)
 {
-	// uint64_t	start;
+	uint64_t	start;
 
-	// start = get_time();
-	// while (!env->is_dead && !env->is_satiated)
-	// {
-	// 	if (get_time() - start >= duration)
-	// 		break ;
-	// }
+	start = get_time();
+	while (!env->is_dead && !env->is_satiated)
+	{
+		if (get_time() - start >= duration)
+			break ;
+	}
 
-	(void)env;
-	usleep(duration * 1000);
+// 	(void)env;
+// 	usleep(duration * 1000);
 }
