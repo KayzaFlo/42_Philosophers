@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/03/07 15:20:08 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/03/15 15:33:59 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,12 @@ RM			:= rm -f
 CFLAGS		= -Wall -Wextra -Werror
 
 #####	SOURCES		############################################################
-SRC			=	src/main.c \
-				src/thread.c \
+SRC			=	src/philosophers.c \
+				src/parsing.c \
+				src/thread_setup.c \
+				src/thread_routine.c \
 				src/utils_time.c \
+				src/utils_print.c \
 				src/utils_str.c
 OBJ			=	$(SRC:.c=.o)
 

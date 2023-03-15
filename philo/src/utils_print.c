@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_time.c                                       :+:      :+:    :+:   */
+/*   utils_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/02 13:01:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/15 15:24:23 by fgeslin          ###   ########.fr       */
+/*   Created: 2023/03/15 15:31:20 by fgeslin           #+#    #+#             */
+/*   Updated: 2023/03/15 15:31:47 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
-#include <sys/time.h>
 
-uint64_t	get_time(void)
+void	print_status(char *msg, t_philo *philo)
 {
-	struct timeval	time;
+	unsigned long	timestamp;
 
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * (unsigned long)1000) + (time.tv_usec / 1000));
+	pthread_mutex_lock(&philo->env->printing);
+	timestamp = get_time() - philo->env->start_time;
+	if (!philo->env->is_dead && !philo->env->is_satiated)
+		printf("%lu %d %s\n", timestamp, philo->id, msg);
+	pthread_mutex_unlock(&philo->env->printing);
 }
 
-void	ft_msleep(uint64_t duration, t_env *env)
+int	ft_return_error(char *msg)
 {
-	uint64_t	start;
-
-	start = get_time();
-	while (!env->is_dead && !env->is_satiated)
-	{
-		if (get_time() - start >= duration)
-			break ;
-	}
+	write(2, msg, ft_strlen(msg));
+	return (0);
 }

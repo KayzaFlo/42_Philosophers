@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:18:40 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/02 13:02:39 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/15 16:06:35 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,29 +21,26 @@ static int	ft_isspace(char c)
 	return (0);
 }
 
-int	ft_atoi(const char *str)
+int	atoi_overflow(const char *str)
 {
 	int	i;
 	int	nbr;
-	int	mult;
 
 	i = 0;
 	nbr = 0;
-	mult = 1;
 	while (ft_isspace(str[i]) == 1)
 		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			mult = -1;
-		i++;
-	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
+		if (nbr > INT32_MAX / 10 + 1 || nbr < INT32_MIN / 10)
+			return (-1);
+		if (nbr * 10 > INT32_MAX - (str[i] - '0')
+			|| nbr * 10 < -(str[i] - '0'))
+			return (-1);
 		nbr = nbr * 10 + str[i] - '0';
 		i++;
 	}
-	return (nbr * mult);
+	return (nbr);
 }
 
 int	ft_strlen(char *str)
@@ -54,10 +51,4 @@ int	ft_strlen(char *str)
 	while (str[i])
 		i++;
 	return (i);
-}
-
-int	ft_return_error(char *msg)
-{
-	write(2, msg, ft_strlen(msg));
-	return (0);
 }

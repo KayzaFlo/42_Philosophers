@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/10 13:57:47 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/15 16:06:37 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,7 @@
 # include <unistd.h>  //Header file for sleep(). man 3 sleep for details.
 # include <pthread.h>
 
-# define ERR_USAGE KYEL "🟡 Usage: " KWHT KBLD "./client " KNRM KUND\
-  "number_of_philosophers" KNRM " " KUND "time_to_die" KNRM " " KUND\
-  "time_to_eat" KNRM " " KUND "time_to_sleep" KNRM " " KUND\
-  "[number_of_times_each_philosopher_must_eat]" KNRM "\n"
-# define ERR_PARAM KYEL "🟡 Usage: " KWHT "Incorrect parameters.\n"
-
-typedef struct	s_env
+typedef struct s_env
 {
 	int				count;
 	int				time_to_die;
@@ -39,7 +33,7 @@ typedef struct	s_env
 	pthread_mutex_t	printing;
 }	t_env;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				ffork;
@@ -51,16 +45,25 @@ typedef struct	s_philo
 }	t_philo;
 
 // Utils Str
-int			ft_atoi(const char *str);
+int			atoi_overflow(const char *str);
 int			ft_return_error(char *msg);
+int			ft_strlen(char *str);
 
 // Utils Time
 uint64_t	get_time(void);
 void		ft_msleep(uint64_t duration, t_env *env);
 
-void		print_status(char *msg, t_philo *philo, int unlock);
+// Utils Print
+void		print_status(char *msg, t_philo *philo);
+int			ft_return_error(char *msg);
 
+// Parsing
+int			parse_params(int argc, char *argv[], t_env *env);
+
+// Threads
 void		threads_init(t_philo *philos, t_env *env);
 void		threads_exit(t_philo *philos, t_env *env);
+void		routine_eat(t_philo *philo, t_env *env);
+void		routine(t_philo *philo);
 
 #endif
