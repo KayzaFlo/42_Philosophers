@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/15 17:30:25 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/15 16:18:29 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 # include "colors.h"
 # include <stdio.h>
 # include <stdlib.h>
-# include <unistd.h>
+# include <unistd.h> 
 # include <pthread.h>
+# include <semaphore.h>
 
 typedef struct s_env
 {
@@ -41,27 +42,5 @@ typedef struct s_philo
 	struct s_env	*env;
 	pthread_t		thread_id;
 }	t_philo;
-
-// Utils Str
-int			atoi_overflow(const char *str);
-int			ft_return_error(char *msg);
-int			ft_strlen(char *str);
-
-// Utils Time
-uint64_t	get_time(void);
-void		ft_msleep(uint64_t duration, t_env *env);
-
-// Utils Print
-void		print_status(char *msg, t_philo *philo);
-int			print_error(char *msg, int i);
-
-// Parsing
-int			parse_params(int argc, char *argv[], t_env *env);
-
-// Threads
-int			threads_init(t_philo *philos, t_env *env);
-int			threads_exit(t_philo *philos, t_env *env);
-int			routine_eat(t_philo *philo, t_env *env);
-void		routine(t_philo *philo);
 
 #endif

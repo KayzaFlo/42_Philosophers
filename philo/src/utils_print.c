@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 15:31:20 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/15 15:31:47 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/15 17:10:28 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	print_status(char *msg, t_philo *philo)
 	pthread_mutex_unlock(&philo->env->printing);
 }
 
-int	ft_return_error(char *msg)
+int	print_error(char *msg, int i)
 {
 	write(2, msg, ft_strlen(msg));
-	return (0);
+	return (i);
 }

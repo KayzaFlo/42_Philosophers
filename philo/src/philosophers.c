@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philosophers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:54:41 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/15 15:33:40 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/15 17:13:45 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,21 @@ int	main(int argc, char *argv[])
 	t_env			env;
 
 	if (argc < 5 || argc > 6)
-		return (ft_return_error("🟡 Usage: " KWHT KBLD "./client " KNRM
+		return (print_error("🟡 Usage: " KWHT KBLD "./client " KNRM
 				KUND "number_of_philosophers" KNRM " " KUND "time_to_die" KNRM
 				" " KUND "time_to_eat" KNRM " " KUND "time_to_sleep" KNRM " "
-				KUND "[number_of_times_each_philosopher_must_eat]" KNRM "\n"));
+				KUND "[nbr_of_times_each_philosopher_must_eat]" KNRM "\n", 0));
 	if (!parse_params(argc, argv, &env))
-		return (ft_return_error("🟡 Usage: " KWHT "Incorrect parameters.\n"));
+		return (print_error("🟡 Usage: " KWHT "Incorrect parameters.\n", 0));
 	philos = malloc(env.count * sizeof(*philos));
 	env.forks = malloc(env.count * sizeof(*env.forks));
 	if (!philos || !(env.forks))
-		return (ft_return_error("🔴 Error in Alloc!\n"));
-	threads_init(philos, &env);
+		return (print_error("🔴 Error in Alloc!\n", 1));
+	if (threads_init(philos, &env))
+		return (1);
 	wait_for_end(philos, &env);
-	threads_exit(philos, &env);
+	if (threads_exit(philos, &env))
+		return (1);
 	free(philos);
 	free(env.forks);
 	return (0);
