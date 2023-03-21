@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:41:17 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/15 17:33:46 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/21 10:58:56 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,16 @@ int	threads_exit(t_philo *philos, t_env *env)
 {
 	int	i;
 
-	if (env->count == 1)
-		if (pthread_detach(philos[0].thread_id))
-			return (print_error("🔴 Error in Thread Detach!\n", 1));
-	i = -1;
-	while (++i < env->count)
-	{
-		if (env->count > 1)
-			if (pthread_join(philos[i].thread_id, NULL))
-				return (print_error("🔴 Error in Thread Join!\n", 1));
-	}
 	i = -1;
 	while (++i < env->count)
 	{
 		pthread_mutex_unlock(&env->forks[i]);
+		if (pthread_join(philos[i].thread_id, NULL))
+			return (print_error("🔴 Error in Thread Join!\n", 1));
+	}
+	i = -1;
+	while (++i < env->count)
+	{
 		if (pthread_mutex_destroy(&env->forks[i]))
 			return (print_error("🔴 Error in Mutex Destroy!\n", 1));
 	}
