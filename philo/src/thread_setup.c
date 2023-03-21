@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:41:17 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/21 10:58:56 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/21 11:33:52 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	threads_exit(t_philo *philos, t_env *env)
 	i = -1;
 	while (++i < env->count)
 	{
+		pthread_mutex_unlock(&env->forks[i]);
 		if (pthread_mutex_destroy(&env->forks[i]))
 			return (print_error("🔴 Error in Mutex Destroy!\n", 1));
 	}
