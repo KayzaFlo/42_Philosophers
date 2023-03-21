@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/03/15 16:11:51 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/03/21 14:54:54 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME		:= philosophers
 CC			:= gcc
 AR			:= ar -rcs
 RM			:= rm -f
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= #-Wall -Wextra -Werror
 
 #####	SOURCES		############################################################
 SRC			=	src/philosophers.c \
