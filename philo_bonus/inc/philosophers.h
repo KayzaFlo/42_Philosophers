@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/21 14:43:43 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/21 15:42:42 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <unistd.h> 
 # include <pthread.h>
 # include <semaphore.h>
+# include <signal.h>
 
 typedef struct s_env
 {
