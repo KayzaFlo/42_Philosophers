@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/21 15:42:42 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/23 14:39:44 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ typedef struct s_env
 	int				is_dead;
 	int				is_satiated;
 	unsigned long	start_time;
-	// pthread_mutex_t	*forks;
-	// pthread_mutex_t	printing;
 	sem_t			*sem_forks;
 }	t_env;
 
