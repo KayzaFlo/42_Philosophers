@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:54:41 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/21 15:37:10 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/24 12:24:05 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,49 @@ static void	wait_for_end(t_philo *philos, t_env *env)
 					satiated_count++;
 		}
 	}
-	// pthread_mutex_lock(&env->printing);
 	printf("Each philosopher ate at least %d time(s).\n", env->max_eat_count);
 	env->is_satiated = 1;
-	// pthread_mutex_unlock(&env->printing);
+}
+
+static void	handler(int sig, siginfo_t *info, void *ucontext)
+{
+	static int		nbr = 0;
+	static int		count = 0;
+	static pid_t	client_pid = 0;
+
+	(void)ucontext;
+	if (info->si_pid)
+		client_pid = info->si_pid;
+	if (client_pid == getpid() || !client_pid)
+	{
+		printf(KRED "🔴 Error:" KWHT " Infinite PID call\n");
+		exit (-1);
+	}
+	nbr <<= 1;
+	nbr |= (sig == SIGUSR1);
+	count = (count + 1) % 32;
+	if (!count)
+	{
+		printf("(handler) sig: %d\n", nbr);
+		fflush(stdout);
+		nbr = 0;
+	}
+	kill(client_pid, SIGUSR2);
+}
+
+static void	init_sigs()
+{
+	struct sigaction	sa;
+
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGUSR1);
+	sigaddset(&sa.sa_mask, SIGUSR2);
+	sa.sa_flags = SA_SIGINFO | SA_RESTART;
+	sa.sa_sigaction = handler;
+	if (sigaction(SIGUSR1, &sa, NULL) == -1)
+		exit (-1);
+	if (sigaction(SIGUSR2, &sa, NULL) == -1)
+		exit (-1);
 }
 
 int	main(int argc, char *argv[])
@@ -54,16 +93,16 @@ int	main(int argc, char *argv[])
 	if (!parse_params(argc, argv, &env))
 		return (print_error("🟡 Usage: " KWHT "Incorrect parameters.\n", 0));
 	philos = malloc(env.count * sizeof(*philos));
-	// env.forks = malloc(env.count * sizeof(*env.forks));
-	// if (!philos || !(env.forks))
 	if (!philos)
 		return (print_error("🔴 Error in Alloc!\n", 1));
-	if (threads_init(philos, &env))
+		
+	init_sigs();
+
+	if (process_create(philos, &env))
 		return (1);
 	wait_for_end(philos, &env);
-	if (threads_exit(philos, &env))
+	if (process_exit(philos, &env))
 		return (1);
 	free(philos);
-	// free(env.forks);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/23 14:39:44 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/24 12:13:55 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ uint64_t	get_time(void);
 void		ft_msleep(uint64_t duration, t_env *env);
 
 // Utils Print
-void		print_status(char *msg, t_philo *philo);
+void		print_status(char *msg, t_env *env, int i);
 int			print_error(char *msg, int i);
 
 // Parsing
 int			parse_params(int argc, char *argv[], t_env *env);
 
 // Threads
-int			threads_init(t_philo *philos, t_env *env);
-int			threads_exit(t_philo *philos, t_env *env);
-int			routine_eat(t_philo *philo, t_env *env);
-void		routine(t_philo *philo);
+int			process_create(t_philo *philos, t_env *env);
+int			process_exit(t_philo *philos, t_env *env);
+int			routine_eat(t_env *env, int i);
+void		routine(t_env *env, int i);
 
 #endif

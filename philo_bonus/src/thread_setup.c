@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:41:17 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/23 15:43:47 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/03/24 12:21:32 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ int	process_create(t_philo *philos, t_env *env)
 		if (pid)
 		{
 			philos[i].pid = pid;
+			// philos[i].id = i + 1;
+			// philos[i].env = env;
+			// philos[i].ate_count = 0;
+			// philos[i].last_ate = get_time();
 		}
 		else
 		{
-			philos[i].id = i + 1;
-			philos[i].env = env;
-			philos[i].ate_count = 0;
-			philos[i].last_ate = get_time();
-			routine(&philos[i]);
+			routine(env, i + 1);
 			return (0);
 		}
 	}
@@ -50,7 +50,7 @@ int	process_exit(t_philo *philos, t_env *env)
 		sleep(5);
 		kill(philos[i].pid, SIGTERM);
 		sem_post(env->sem_forks);
-		printf("%d\n", env->is_dead); // does not share the same env
+		printf("(process_exit) is dead: %d\n", env->is_dead); // does not share the same env
 		waitpid(philos[i].pid, NULL, 0);
 	}
 	sem_close(env->sem_forks);
