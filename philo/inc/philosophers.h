@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:55:27 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/15 17:30:25 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:09:54 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_env
 	unsigned long	start_time;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	printing;
+	pthread_mutex_t	eating;
 }	t_env;
 
 typedef struct s_philo

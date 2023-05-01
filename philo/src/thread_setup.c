@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:41:17 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/21 11:33:52 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/04/24 15:12:25 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ int	threads_init(t_philo *philos, t_env *env)
 
 	i = -1;
 	while (++i < env->count)
-	{
 		if (pthread_mutex_init(&env->forks[i], NULL))
 			return (print_error("🔴 Error in Mutex Init!\n", 1));
-	}
 	if (pthread_mutex_init(&env->printing, NULL))
+		return (print_error("🔴 Error in Mutex Init!\n", 1));
+	if (pthread_mutex_init(&env->eating, NULL))
 		return (print_error("🔴 Error in Mutex Init!\n", 1));
 	i = -1;
 	while (++i < env->count)
@@ -59,6 +59,8 @@ int	threads_exit(t_philo *philos, t_env *env)
 			return (print_error("🔴 Error in Mutex Destroy!\n", 1));
 	}
 	if (pthread_mutex_destroy(&env->printing))
+		return (print_error("🔴 Error in Mutex Destroy!\n", 1));
+	if (pthread_mutex_destroy(&env->eating))
 		return (print_error("🔴 Error in Mutex Destroy!\n", 1));
 	return (0);
 }

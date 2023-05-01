@@ -6,18 +6,14 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 14:54:41 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/03/15 17:13:45 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/04/24 16:18:42 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
 
-static void	wait_for_end(t_philo *philos, t_env *env)
+static void	wait_for_end(t_philo *philos, t_env *env, int i, int satiated_count)
 {
-	int	i;
-	int	satiated_count;
-
-	satiated_count = 0;
 	while (satiated_count != env->count)
 	{
 		i = -1;
@@ -26,8 +22,10 @@ static void	wait_for_end(t_philo *philos, t_env *env)
 		{
 			if ((int)(get_time() - philos[i].last_ate) > env->time_to_die)
 			{
+				pthread_mutex_lock(&env->eating);
 				print_status("died", &philos[i]);
 				env->is_dead = 1;
+				pthread_mutex_unlock(&env->eating);
 				return ;
 			}
 			if (env->max_eat_count && i < env->count)
@@ -59,7 +57,7 @@ int	main(int argc, char *argv[])
 		return (print_error("🔴 Error in Alloc!\n", 1));
 	if (threads_init(philos, &env))
 		return (1);
-	wait_for_end(philos, &env);
+	wait_for_end(philos, &env, 0, 0);
 	if (threads_exit(philos, &env))
 		return (1);
 	free(philos);
