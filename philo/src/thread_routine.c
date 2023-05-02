@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 11:41:17 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/04/24 15:33:38 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/05/02 12:06:22 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	routine_eat(t_philo *philo, t_env *env)
 {
 	pthread_mutex_lock(&env->forks[(philo->id - 1) % env->count]);
+	print_status("has taken a fork", philo);
 	if (env->is_dead)
 		return (1);
-	print_status("has taken a fork", philo);
 	pthread_mutex_lock(&env->forks[philo->id % env->count]);
+	print_status("has taken a fork", philo);
 	if (env->is_dead)
 		return (1);
-	print_status("has taken a fork", philo);
 	pthread_mutex_lock(&env->eating);
 	print_status("is eating", philo);
 	philo->last_ate = get_time();
